@@ -1,0 +1,21 @@
+<img src="assets/cube.gif" alt="cube" class="left cube"/>
+<p id="index">{{questionIndex() + 1}}/{{questions.length}}</p>
+<h1>{{questionString()}}</h1>
+<div class="buttons">
+  <button id="disagreePlus" (click)="answer($event.currentTarget)">
+    <img src="assets/nope.svg" alt="nope"/>
+  </button>
+  <button id="disagree" (click)="answer($event.currentTarget)">
+    <img src="assets/nah.svg" alt="nah"/>
+  </button>
+  <button id="neutral" (click)="answer($event.currentTarget)">
+    <img src="assets/ok.svg" alt="nah"/>
+  </button>
+  <button id="agree" (click)="answer($event.currentTarget)">
+    <img src="assets/yah.svg" alt="yes"/>
+  </button>
+  <button id="agreePlus" (click)="answer($event.currentTarget)">
+    <img src="assets/love.svg" alt="yep"/>
+  </button>
+</div>
+<img src="assets/cube.gif" alt="cube" class="right cube"/>

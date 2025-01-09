@@ -1,13 +1,28 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+
+import { ChangeDetectionStrategy, Component, signal } from "@angular/core";
+import { QuestionsComponent } from "./questions/questions.component";
+import { RouterOutlet } from "@angular/router";
+import { ResultComponent } from "./result/result.component";
+
+export interface Points {
+  farLeft?: number;
+  left?: number;
+  centerLeft?: number;
+  centerRight?: number;
+  right?: number;
+  farRight?: number;
+}
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, QuestionsComponent, ResultComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-  title = 'q4s';
+
+  points = signal<Points | null>(null);
+
 }

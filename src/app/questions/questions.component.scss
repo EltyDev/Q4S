@@ -1,0 +1,117 @@
+@import "../shared/scss/breakpoints.scss";
+@import "../shared/scss/variables.scss";
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  gap: 0.5rem;
+}
+
+h1 {
+  font-family: "Fira Sans", sans-serif;
+  font-size: 32px;
+  font-weight: normal;
+  border: 4px solid $pink;
+  width: 45%;
+  border-radius: 0.35rem;
+  text-align: center;
+  margin: 0;
+  padding: 3rem;
+  background-color: white;
+  @include for-size-down(md) {
+    font-size: 16px;
+  }
+}
+
+#index {
+  font-family: "roboto", sans-serif;
+  font-size: 24px;
+  color: $pink;
+  margin: 0;
+}
+
+.buttons {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+
+  > button {
+    width: 50px;
+    height: 100%;
+    aspect-ratio: 1/1;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: 5px solid;
+    outline-offset: -1px;
+
+    @include for-size-down(md) {
+      width: 40px;
+      outline: 3px solid;
+    }
+
+    > img {
+      width: 50%;
+      height: 50%;
+    }
+
+    &:hover {
+      cursor: pointer;
+      outline: 0;
+    }
+  }
+
+  > #disagreePlus {
+    background-color: $red;
+    outline-color: $red
+  }
+
+  > #disagree {
+    outline-color: $yellow;
+    background-color: $yellow;
+  }
+
+  > #neutral {
+    background-color: $gray;
+    outline-color: $gray;
+  }
+
+  > #agree {
+    background-color: $light_green;
+    outline-color: $light_green;
+  }
+
+  > #agreePlus {
+    background-color: $green;
+    outline-color: $green;
+  }
+
+}
+
+.cube {
+  position: fixed;
+  width: 50%;
+  z-index: -1;
+  @include for-size-down(md) {
+    width: 75%;
+  }
+}
+
+.left.cube {
+  top: 0;
+  left: 0;
+}
+
+.right.cube {
+  transform: rotate(180deg);
+  bottom: 0;
+  right: 0;
+}

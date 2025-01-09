@@ -1,0 +1,51 @@
+// Define the breakpoints
+$breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px,
+  xxxl: 1600px
+);
+
+// Define the max-widths
+$max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1320px,
+  xxxl: 1500px
+);
+
+// Mixin for min-width media query (greater sizes)
+@mixin for-size-up($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (min-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @warn "Unknown `#{$breakpoint}` in `for-size-up` mixin.";
+  }
+}
+
+// Mixin for max-width media query (lower sizes)
+@mixin for-size-down($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (max-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @warn "Unknown `#{$breakpoint}` in `for-size-down` mixin.";
+  }
+}
+
+// Mixin for max-width
+@mixin max-width($breakpoint) {
+  @if map-has-key($max-widths, $breakpoint) {
+    max-width: map-get($max-widths, $breakpoint);
+  } @else {
+    @warn "Unknown `#{$breakpoint}` in `max-width` mixin.";
+  }
+}

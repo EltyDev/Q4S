@@ -1,0 +1,65 @@
+<div alt="cube" class="left cube"></div>
+<div class="wrapper">
+  <div class="result-wrapper">
+    <img src="assets/star.gif" alt="star" class="star"/>
+    <div id="result">
+      <h1>Résultat</h1>
+      <h2>{{info()?.name}}</h2>
+    </div>
+    <img src="assets/star.gif" alt="star" class="star"/>
+  </div>
+  <div class="stats">
+    <div class="data">
+      <div id="farLeft" [style.height.%]="farLeft()">
+        <label [className]="farLeft() >= 8 ? '' : 'upward'">{{farLeft()}} %</label>
+      </div>
+      <div id="left" [style.height.%]="left()">
+        <label [className]="left() >= 8 ? '' : 'upward'">{{left()}} %</label>
+      </div>
+      <div id="centerLeft" [style.height.%]="centerLeft()">
+        <label [className]="centerLeft() >= 8 ? '' : 'upward'">{{centerLeft()}} %</label>
+      </div>
+      <div id="centerRight" [style.height.%]="centerRight()">
+        <label [className]="centerRight() >= 8 ? '' : 'upward'">{{centerRight()}} %</label>
+      </div>
+      <div id="right" [style.height.%]="right()">
+        <label [className]="right() >= 8 ? '' : 'upward'">{{right()}} %</label>
+      </div>
+      <div id="farRight" [style.height.%]="farRight()">
+        <label [className]="farRight() >= 8 ? '' : 'upward'">{{farRight()}} %</label>
+      </div>
+    </div>
+    <div class="separator"></div>
+    <div class="labels">
+      <p>Extrême
+        gauche</p>
+      <p>Gauche</p>
+      <p>Centre
+        gauche</p>
+      <p>Centre
+        droit</p>
+      <p>Droite</p>
+      <p>Extrême
+        droite</p>
+    </div>
+  </div>
+  <p id="smallDescription">{{info()?.shortDescription}}</p>
+  <div class="expander"></div>
+  <div class="informations" (click)="toggleDisplayAbout()">
+    @if (!displayAbout()) {
+      <img src="assets/arrow.svg" alt="arrow" class="arrow"/>
+    } @else {
+      <img src="assets/arrow.svg" alt="arrow" class="arrow reversed"/>
+    }
+    <p [@fadeInOut]="displayAbout() ? 'closed' : 'open'" >Information</p>
+  </div>
+  <div #details class="details" [@openClose]="displayAbout() ? 'open' : 'closed'" (@openClose.start)="onAnimationStart($event)" (@openClose.done)="onAnimationEnd($event)">
+    <p id="description">
+      {{info()?.description}}
+    </p>
+    <div #icons class="icons">
+      <img src="{{info()?.img}}" alt="farLeft"/>
+    </div>
+  </div>
+</div>
+<div alt="cube" class="right cube"></div>
