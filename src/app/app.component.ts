@@ -1,5 +1,5 @@
 
-import { ChangeDetectionStrategy, Component, signal } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject, signal } from "@angular/core";
 import { QuestionsComponent } from "./questions/questions.component";
 import { RouterOutlet } from "@angular/router";
 import { ResultComponent } from "./result/result.component";

@@ -8,6 +8,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "github-build": "ng build --configuration production --base-href \"https://eltydev.github.io/Q4S/\"",
+    "github-deploy": "npx angular-cli-ghpages --dir=dist/browser --no-silent",
     "serve:ssr:q4s": "node dist/q4s/server/server.mjs"
   },
   "private": true,
