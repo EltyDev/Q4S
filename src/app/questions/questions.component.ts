@@ -70,19 +70,19 @@ export class QuestionsComponent {
       if (points.farRight !== undefined) this.points.farRight! += points.farRight;
     }
     switch (id) {
-      case 'agreePlus':
+      case 'disagreePlus':
         this.questionResult.push(0);
         break;
-      case 'agree':
+      case 'disagree':
         this.questionResult.push(1);
         break;
       case 'neutral':
         this.questionResult.push(2);
         break;
-      case 'disagree':
+      case 'agree':
         this.questionResult.push(3);
         break;
-      case 'disagreePlus':
+      case 'agreePlus':
         this.questionResult.push(4);
         break;
     }

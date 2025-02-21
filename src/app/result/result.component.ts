@@ -91,8 +91,8 @@ export class ResultComponent implements OnInit {
     fields["right"] = this.result().points.right;
     fields["far_right"] = this.result().points.farRight;
     this.supabaseClient.from("data").insert(fields).then(result => {
-      console.log(result.data);
-      console.log(result.error);
+      if (result.error)
+        console.error(result.error);
     });
   }
 
