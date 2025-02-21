@@ -1,7 +1,7 @@
 import { Component, computed, inject, output, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import baseQuestions from '../../../public/questions.json';
-import { Points } from '../app.component';
+import { Result, Points } from '../app.component';
 
 interface Attribution {
   agreePlus?: Points;
@@ -36,7 +36,9 @@ export class QuestionsComponent {
     farRight: 0
   };
 
-  onFinished = output<Points>();
+  questionResult: number[] = [];
+
+  onFinished = output<Result>();
 
   shuffleArray = (array: any[]) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -67,10 +69,30 @@ export class QuestionsComponent {
       if (points.right !== undefined) this.points.right! += points.right;
       if (points.farRight !== undefined) this.points.farRight! += points.farRight;
     }
+    switch (id) {
+      case 'agreePlus':
+        this.questionResult.push(0);
+        break;
+      case 'agree':
+        this.questionResult.push(1);
+        break;
+      case 'neutral':
+        this.questionResult.push(2);
+        break;
+      case 'disagree':
+        this.questionResult.push(3);
+        break;
+      case 'disagreePlus':
+        this.questionResult.push(4);
+        break;
+    }
     if (this.questionIndex() + 1 < this.questions.length) {
       this.questionIndex.set(index + 1);
       return;
     }
-    this.onFinished.emit(this.points);
+    this.onFinished.emit({
+      questions: this.questionResult,
+      points: this.points
+    });
   }
 }

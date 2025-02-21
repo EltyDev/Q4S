@@ -13,6 +13,11 @@ export interface Points {
   farRight?: number;
 }
 
+export interface Result {
+  questions: number[];
+  points: Points;
+}
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -23,6 +28,6 @@ export interface Points {
 })
 export class AppComponent {
 
-  points = signal<Points | null>(null);
+  result = signal<Result | null>(null);
 
 }

@@ -1,7 +1,7 @@
 <main>
-  @if (this.points() == null) {
-    <app-questions (onFinished)="this.points.set($event)"/>
+  @if (this.result() == null) {
+    <app-questions (onFinished)="this.result.set($event)"/>
   } @else {
-    <app-result [points]="this.points()!"/>
+    <app-result [result]="this.result()!"/>
   }
 </main>

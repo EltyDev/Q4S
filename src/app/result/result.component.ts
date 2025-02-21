@@ -1,7 +1,9 @@
-import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, input, Renderer2, Signal, signal, viewChild } from '@angular/core';
-import { Points } from '../app.component';
+import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, input, Renderer2, Signal, signal, viewChild, OnInit} from '@angular/core';
+import { Result } from '../app.component';
 import { animate, AnimationEvent, state, style, transition, trigger } from '@angular/animations';
 import { PartyService, PartyType } from '../shared/services/PartyService';
+import { createClient, SupabaseClient } from "@supabase/supabase-js"
+import { environment } from '../../environment/environment';
 
 @Component({
   selector: 'app-result',
@@ -40,27 +42,29 @@ import { PartyService, PartyType } from '../shared/services/PartyService';
     ])
   ],
 })
-export class ResultComponent  {
+export class ResultComponent implements OnInit {
 
   renderer = inject(Renderer2);
   partyService = inject(PartyService);
 
-  points = input.required<Points>();
+  result = input.required<Result>();
   displayAbout = signal(false);
 
   icons = viewChild.required<ElementRef>("icons");
   details = viewChild.required<ElementRef>("details");
 
+  supabaseClient: SupabaseClient = createClient(environment.supabaseUrl, environment.supabaseKey);
+
   round(num: number) {
     return Math.round(num);
   }
 
-  farLeft = computed(() => this.round(this.points().farLeft! / 50 * 100));
-  left = computed(() => this.round(this.points().left! / 50 * 100));
-  centerLeft = computed(() => this.round(this.points().centerLeft! / 50 * 100));
-  centerRight = computed(() => this.round(this.points().centerRight! / 50 * 100));
-  right = computed(() => this.round(this.points().right! / 50 * 100));
-  farRight = computed(() => this.round(this.points().farRight! / 50 * 100));
+  farLeft = computed(() => this.round(this.result().points.farLeft! / 50 * 100));
+  left = computed(() => this.round(this.result().points.left! / 50 * 100));
+  centerLeft = computed(() => this.round(this.result().points.centerLeft! / 50 * 100));
+  centerRight = computed(() => this.round(this.result().points.centerRight! / 50 * 100));
+  right = computed(() => this.round(this.result().points.right! / 50 * 100));
+  farRight = computed(() => this.round(this.result().points.farRight! / 50 * 100));
 
   highestPercentage: Signal<PartyType> = computed(() => {
     switch (Math.max(this.farLeft(), this.left(), this.centerLeft(), this.centerRight(), this.right(), this.farRight())) {
@@ -75,6 +79,22 @@ export class ResultComponent  {
   });
 
   info = computed(() => { return this.partyService.getInfo(this.highestPercentage()); });
+
+  ngOnInit(): void {
+    let fields = {} as any;
+    for (let i = 0; i < 50; i++)
+      fields[`q${i + 1}`] = this.result().questions[i];
+    fields["far_left"] = this.result().points.farLeft;
+    fields["left"] = this.result().points.left;
+    fields["center_left"] = this.result().points.centerLeft;
+    fields["center_right"] = this.result().points.centerRight;
+    fields["right"] = this.result().points.right;
+    fields["far_right"] = this.result().points.farRight;
+    this.supabaseClient.from("data").insert(fields).then(result => {
+      console.log(result.data);
+      console.log(result.error);
+    });
+  }
 
   toggleDisplayAbout() {
     this.displayAbout.update((prev) => !prev);
