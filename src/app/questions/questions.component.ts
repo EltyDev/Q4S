@@ -16,6 +16,10 @@ interface Question {
   attribution: Attribution;
 }
 
+interface OrderedQuestion extends Question {
+  id: number;
+}
+
 @Component({
   selector: 'app-questions',
   standalone: true,
@@ -36,21 +40,22 @@ export class QuestionsComponent {
     farRight: 0
   };
 
-  questionResult: number[] = [];
+  questionResult: number[] = [...Array(baseQuestions.length)];
 
   onFinished = output<Result>();
 
-  shuffleArray = (array: any[]) => {
-    for (let i = array.length - 1; i > 0; i--) {
+  shuffleQuestions = (array: Question[]) => {
+    let orderedQuestions = array.map((question, index) => ({ ...question, id: index })) as OrderedQuestion[];
+    for (let i = orderedQuestions.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      const temp = array[i];
-      array[i] = array[j];
-      array[j] = temp;
+      const temp = orderedQuestions[i];
+      orderedQuestions[i] = orderedQuestions[j];
+      orderedQuestions[j] = temp;
     }
-    return array;
+    return orderedQuestions;
   }
 
-  questions: Question[] = this.shuffleArray(baseQuestions as Question[]);
+  questions: OrderedQuestion[] = this.shuffleQuestions(baseQuestions as Question[]);
 
   questionIndex = signal(0);
   questionString = computed(() => this.questions[this.questionIndex()].question);
@@ -71,19 +76,19 @@ export class QuestionsComponent {
     }
     switch (id) {
       case 'disagreePlus':
-        this.questionResult.push(0);
+        this.questionResult[question.id] = 0;
         break;
       case 'disagree':
-        this.questionResult.push(1);
+        this.questionResult[question.id] = 1;
         break;
       case 'neutral':
-        this.questionResult.push(2);
+        this.questionResult[question.id] = 2;
         break;
       case 'agree':
-        this.questionResult.push(3);
+        this.questionResult[question.id] = 3;
         break;
       case 'agreePlus':
-        this.questionResult.push(4);
+        this.questionResult[question.id] = 4;
         break;
     }
     if (this.questionIndex() + 1 < this.questions.length) {

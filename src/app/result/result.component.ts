@@ -82,7 +82,7 @@ export class ResultComponent implements OnInit {
 
   ngOnInit(): void {
     let fields = {} as any;
-    for (let i = 0; i < 50; i++)
+    for (let i = 0; i < this.result().questions.length; i++)
       fields[`q${i + 1}`] = this.result().questions[i];
     fields["far_left"] = this.result().points.farLeft;
     fields["left"] = this.result().points.left;
