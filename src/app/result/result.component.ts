@@ -3,7 +3,7 @@ import { Result } from '../app.component';
 import { animate, AnimationEvent, state, style, transition, trigger } from '@angular/animations';
 import { PartyService, PartyType } from '../shared/services/PartyService';
 import { createClient, SupabaseClient } from "@supabase/supabase-js"
-import { environment } from '../../environment/environment';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-result',
